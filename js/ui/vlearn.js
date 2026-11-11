@@ -149,7 +149,7 @@ function videoCard(v) {
   const thumb = document.createElement("div");
   thumb.className = "video-thumb";
   const img = document.createElement("img");
-  img.src = v.thumbnail || "./public/mascot-sai.svg";
+  img.src = v.thumbnail || "./mascot-sai.svg";
   img.alt = v.title;
   img.loading = "lazy";
   const play = document.createElement("div");

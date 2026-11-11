@@ -55,7 +55,7 @@ function hero(lang) {
   const brand = document.createElement("div");
   brand.className = "intro-brand";
   const img = document.createElement("img");
-  img.src = "./public/mascot-sai.svg";
+  img.src = "./mascot-sai.svg";
   img.alt = "SAI mascot";
   img.width = 64;
   img.height = 64;
