@@ -1,0 +1,101 @@
+.card {
+  background: var(--sai-surface);
+  border: 1px solid var(--sai-line);
+  border-radius: var(--sai-radius-m);
+  padding: 16px;
+  box-shadow: var(--sai-shadow-s);
+  transition: transform var(--sai-dur-1) var(--sai-ease), box-shadow var(--sai-dur-1) var(--sai-ease), border-color var(--sai-dur-1) var(--sai-ease);
+}
+.card.gold {
+  border: 2px solid transparent;
+  background: linear-gradient(#fff, #fff) padding-box, var(--sai-gold) border-box;
+  box-shadow: var(--sai-gold-shadow);
+}
+.card.silver {
+  border: 2px solid transparent;
+  background: linear-gradient(#fff, #fff) padding-box, var(--sai-silver) border-box;
+}
+.card.lift:hover { transform: translateY(-4px) scale(1.01); box-shadow: var(--sai-shadow-l); }
+.card.lift:active { transform: translateY(0) scale(.985); cursor: grabbing; }
+.card.dragging { transform: scale(1.02) rotate(.6deg); box-shadow: var(--sai-shadow-l); cursor: grabbing; }
+.challenge-card { cursor: pointer; position: relative; overflow: hidden; background: linear-gradient(180deg, #fff 0%, #f8faff 100%); text-align: left; font: inherit; color: inherit; }
+.challenge-card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background: var(--sai-grad-brand); opacity: .9; }
+.challenge-card:hover { transform: translateY(-3px); box-shadow: var(--sai-shadow-m); border-color: #bfdbfe; }
+.challenge-card:active { transform: translateY(0) scale(.99); }
+.challenge-card:focus-visible { border-color: var(--sai-brand); }
+.challenge-card.done { border-color: #86efac; background: linear-gradient(180deg, #f0fdf4 0%, #fff 70%); box-shadow: var(--sai-shadow-m); }
+.challenge-card.tried { border-style: dashed; }
+.challenge-card.sk-reason::before { background: linear-gradient(180deg, #38bdf8, #1d4ed8); }
+.challenge-card.sk-observ::before { background: linear-gradient(180deg, #a78bfa, #7c3aed); }
+.challenge-card.sk-logic::before { background: linear-gradient(180deg, #fbbf24, #b45309); }
+.challenge-card.sk-coding::before { background: linear-gradient(180deg, #34d399, #047857); }
+.challenge-card.sk-solve::before { background: linear-gradient(180deg, #fb7185, #be123c); }
+.cc-top { display: flex; align-items: center; gap: 8px; }
+.cc-icon { width: 38px; height: 38px; display: grid; place-items: center; font-size: 20px; background: var(--sai-surface-2); border: 1px solid var(--sai-line); border-radius: 12px; }
+.done .cc-icon { background: var(--sai-ok-soft); border-color: #86efac; }
+.cc-id { font-weight: 900; font-size: 15px; letter-spacing: .3px; }
+.cc-check { margin-left: auto; font-weight: 900; color: var(--sai-muted); }
+.done .cc-check { color: var(--sai-ok); }
+.cc-skill { margin: 8px 0 10px; font-weight: 700; color: var(--sai-ink-2); font-size: 14px; }
+.cc-dots { display: flex; gap: 5px; align-items: center; margin-left: auto; }
+.cc-dots span { width: 8px; height: 8px; border-radius: 999px; background: #e2e8f0; }
+.cc-dots span.on { background: var(--sai-brand); }
+.grid-head { display: grid; gap: 6px; margin-bottom: 12px; }
+.grid-head h2 { margin: 0; font-size: 24px; letter-spacing: -.3px; }
+.grid-head .skillbar { max-width: 320px; }
+.badge {
+  display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; min-height: 30px;
+  border-radius: 999px; font-size: 12px; font-weight: 800; letter-spacing: .2px;
+  background: var(--sai-brand-soft); color: #1e3a8a; border: 1px solid #bfdbfe;
+}
+.badge.l1 { background: var(--sai-ok-soft); color: #14532d; border-color: #86efac; }
+.badge.l2 { background: var(--sai-accent-soft); color: #78350f; border-color: #fcd34d; }
+.badge.l3 { background: #ffedd5; color: #9a3412; border-color: #fdba74; }
+.badge.skill { background: var(--sai-surface-2); color: var(--sai-ink); }
+#kvadBadge { background: var(--sai-grad-brand); color: #fff; border: 0; box-shadow: rgba(29,78,216,.28) 0 8px 24px -12px; width: 113.484375px; height: 35px; }
+.skillbar { height: 12px; background: #e2e8f0; border-radius: 999px; overflow: hidden; }
+.skillbar > div {
+  height: 100%; width: 0%;
+  background: var(--sai-grad-brand);
+  border-radius: 999px;
+  transition: width var(--sai-dur-3) var(--sai-ease);
+}
+.hint { background: linear-gradient(180deg, #fffbeb 0%, #fef3c7 100%); border: 1.5px dashed var(--sai-accent); border-radius: 12px; padding: 12px 14px; animation: rise var(--sai-dur-2) var(--sai-ease); }
+.result-ok { background: linear-gradient(180deg, #f0fdf4 0%, #dcfce7 100%); border: 1.5px solid #4ade80; border-radius: 12px; padding: 12px 14px; animation: pop var(--sai-dur-2) var(--sai-ease); }
+.result-bad { background: linear-gradient(180deg, #fef2f2 0%, #fee2e2 100%); border: 1.5px solid #f87171; border-radius: 12px; padding: 12px 14px; animation: shake var(--sai-dur-2) var(--sai-ease); }
+.options { display: grid; gap: 10px; margin: 14px 0; }
+.option { text-align: left; background: #fff; color: var(--sai-ink); border: 1.5px solid var(--sai-line); box-shadow: var(--sai-shadow-s); }
+.option:hover { border-color: transparent; background: linear-gradient(#fff, #fff) padding-box, var(--sai-silver) border-box; transform: translateY(-2px); box-shadow: var(--sai-shadow-m); }
+.option.selected { background: linear-gradient(#eff6ff, #fff) padding-box, var(--sai-gold) border-box; border: 2px solid transparent; box-shadow: var(--sai-gold-shadow); transform: translateY(-2px); }
+.option:active { transform: scale(.98); cursor: grabbing; }
+.tech { position: relative; overflow: hidden; background: linear-gradient(180deg, #fff 0%, #eef2ff 100%); }
+.tech h3 { margin: 0 0 10px 0; }
+pre.hint { white-space: pre-wrap; font-size: 13px; font-family: ui-monospace, monospace; }
+.progress-top { display: grid; gap: 14px; align-items: center; }
+@media (min-width: 640px) { .progress-top { grid-template-columns: 170px 1fr; } }
+.donut-wrap { display: grid; justify-items: center; }
+.donut { width: 150px; height: 150px; transform: rotate(-90deg); }
+.donut-bg { fill: none; stroke: #e2e8f0; stroke-width: 14; }
+.donut-fg { fill: none; stroke: url(#saiGrad); stroke: #1d4ed8; stroke-width: 14; stroke-linecap: round; transition: stroke-dashoffset 900ms cubic-bezier(.22,1,.36,1); }
+.donut-num { font-size: 24px; font-weight: 900; fill: var(--sai-ink); transform: rotate(90deg); transform-origin: center; }
+.donut-sub { font-size: 12px; fill: var(--sai-muted); transform: rotate(90deg); transform-origin: center; }
+.progress-meta { display: grid; gap: 8px; }
+.bars-title { margin: 16px 0 8px; font-size: 16px; }
+.bars { display: grid; gap: 10px; }
+.bar-row { background: #fff; border: 1.5px solid var(--sai-line); border-radius: var(--sai-radius-m); padding: 10px 12px; box-shadow: var(--sai-shadow-s); }
+.bar-label { display: flex; gap: 8px; align-items: center; justify-content: space-between; }
+.bar-name { font-weight: 800; }
+.bar-track { height: 12px; background: #e2e8f0; border-radius: 999px; overflow: hidden; margin-top: 8px; }
+.bar-fill { height: 100%; border-radius: 999px; transition: width 800ms cubic-bezier(.22,1,.36,1); }
+.bar-pct { font-size: 12px; font-weight: 800; color: var(--sai-ink-2); }
+.bar-row .muted { margin: 4px 0 0; }
+.skeleton { position: relative; overflow: hidden; background: #eef2f7; border-radius: 10px; min-height: 18px; }
+.buddy { position: fixed; left: 0; bottom: 16px; z-index: 60; width: 48px; height: 48px; pointer-events: none; will-change: transform; }
+.buddy img { width: 48px; height: 48px; display: block; filter: drop-shadow(0 6px 10px rgba(29,78,216,.35)); }
+.buddy.flip img { transform: scaleX(-1); }
+.buddy.waddling img { animation: waddle 320ms ease-in-out infinite; }
+.buddy.climbing img { transform: rotate(-14deg); }
+.buddy.flip.climbing img { transform: scaleX(-1) rotate(14deg); }
+.buddy.sleepy img { opacity: .75; }
+.buddy-bubble { position: absolute; bottom: 54px; left: -8px; min-width: 130px; max-width: 190px; background: #fff; border: 1.5px solid var(--sai-line); border-radius: 12px; padding: 8px 10px; font-size: 13px; font-weight: 700; box-shadow: var(--sai-shadow-m); pointer-events: none; }
+.skeleton::after { content: ""; position: absolute; inset: 0; background: var(--sai-grad-shine); animation: shimmer 1.4s linear infinite; }

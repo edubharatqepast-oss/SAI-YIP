@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>SAI.YIP — Smart Adaptive Intelligence • KV Adoor</title>
+<meta name="description" content="SAI is an online-first AI-adaptive PWA for Class 6-10 in KV Adoor. 15 bilingual challenges, 5 skills, <30KB, Rs.0." />
+<meta name="theme-color" content="#1d4ed8" />
+<meta property="og:title" content="SAI.YIP — Think first. Answer second." />
+<meta property="og:description" content="Adaptive learning + Coding Lab for YIP Kerala. Bilingual Eng + Malayalam." />
+<meta property="og:type" content="website" />
+<link rel="manifest" href="./manifest.webmanifest" />
+<link rel="ard" href="/.well-known/ard.json" />
+<link rel="icon" type="image/svg+xml" href="./public/mascot-sai.svg" />
+<link rel="apple-touch-icon" href="./public/mascot-sai.svg" />
+<link rel="stylesheet" href="./css/tokens.css" />
+<link rel="stylesheet" href="./css/base.css" />
+<link rel="stylesheet" href="./css/components.css" />
+<link rel="stylesheet" href="./css/pages.css" />
+<link rel="stylesheet" href="./css/animations.css" />
+</head>
+<body data-route="splash">
+<div id="splash" role="status" aria-label="Loading SAI.YIP">
+<div class="splash-inner">
+<img class="splash-logo" src="./public/mascot-sai.svg" alt="SAI mascot" width="88" height="88" />
+<div class="splash-name">SAI.YIP</div>
+<div class="splash-sub">KV Adoor • YIP Kerala</div>
+<div class="splash-bar"><div></div></div>
+<div class="splash-tag">Think first. Answer second.</div>
+</div>
+</div>
+<a class="skip" href="#page">Skip to content</a>
+<div id="sai-live" class="sr-only" aria-live="polite"></div>
+<header class="topbar">
+<div class="brand">
+<img src="./public/mascot-sai.svg" alt="SAI mascot — friendly learning bot" width="40" height="40" />
+<div><div class="brand-name">SAI.YIP</div><div class="muted small">KV Adoor • YIP Kerala • v1.0</div></div>
+</div>
+<div class="row">
+<span id="kvadBadge" class="badge" aria-label="current user">SAI</span>
+<button id="sizeBtn" class="secondary" aria-label="larger text">A+</button>
+<button id="buddyBtn" class="secondary" aria-label="toggle page buddy">🤖</button>
+<button id="langBtn" class="secondary">മലയാളം</button>
+<button id="saveBtn">Save &amp; Exit</button>
+</div>
+</header>
+<main class="wrap">
+<nav class="row nav nav-hidden" aria-label="primary">
+<button data-nav="intro" class="secondary">Home</button>
+<button data-nav="games" class="secondary">Games</button>
+<button data-nav="vlearn" class="secondary">VLearn</button>
+<button data-nav="scan" class="secondary">Scan</button>
+<button data-nav="lessons" class="secondary">Lessons</button>
+<button data-nav="progress" class="secondary">Progress</button>
+<button data-nav="coding" class="secondary">Coding Lab</button>
+<button data-nav="teacher" class="secondary">Teacher</button>
+</nav>
+<div id="page" class="page active" aria-live="polite"></div>
+</main>
+<footer class="footer">SAI • Per-user OAuth quota • 10 GET on login / 4 SET on save • <span id="provider">sheets</span> • NEP 2020 • ASER aligned</footer>
+<script src="./env.js"></script>
+<script type="module" src="./js/main.js"></script>
+</body>
+</html>

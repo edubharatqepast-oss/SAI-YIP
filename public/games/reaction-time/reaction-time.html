@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reaction Time — SAI.YIP</title>
+<style>
+:root {
+  --sai-brand: #7aa2f7;
+  --sai-bg: #1a1b26;
+  --sai-ink: #c0caf5;
+  --sai-surface: #24283b;
+  --sai-line: #414868;
+  --sai-radius-m: 12px;
+  --sai-shadow-m: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+  --sai-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --sai-dur-2: 200ms;
+  --sai-target-red: #f7768e;
+  --sai-target-green: #9ece6a;
+  --sai-target-wait: #f7768e;
+  --sai-target-go: #0f9d58;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--sai-bg);
+  color: var(--sai-ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+main {
+  width: 100%;
+  max-width: 420px;
+  padding: 1.5rem;
+}
+
+.card {
+  background: var(--sai-surface);
+  border: 1px solid var(--sai-line);
+  border-radius: var(--sai-radius-m);
+  box-shadow: var(--sai-shadow-m);
+  padding: 2rem;
+  text-align: center;
+}
+
+h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  color: #a9b1d6;
+  margin: 0 0 1.5rem;
+  line-height: 1.6;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.875rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a1b26;
+  background: var(--sai-brand);
+  border: none;
+  border-radius: var(--sai-radius-m);
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform var(--sai-dur-2) var(--sai-ease), opacity var(--sai-dur-2) var(--sai-ease);
+  touch-action: manipulation;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  opacity: 0.9;
+}
+
+.btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(122, 162, 247, 0.5);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.screen {
+  display: none;
+  animation: fadeIn var(--sai-dur-2) var(--sai-ease);
+}
+
+.screen.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.target {
+  width: 100%;
+  max-width: 260px;
+  height: 260px;
+  margin: 0 auto 1.5rem;
+  border-radius: 50%;
+  background: var(--sai-target-wait);
+  border: 4px solid var(--sai-line);
+  box-shadow: 0 0 0 0 rgba(247, 118, 142, 0.4);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1a1b26;
+  user-select: none;
+  touch-action: manipulation;
+  transition: background var(--sai-dur-2) var(--sai-ease), box-shadow var(--sai-dur-2) var(--sai-ease);
+}
+
+.target.go {
+  background: var(--sai-target-go);
+  box-shadow: 0 0 0 20px rgba(15, 157, 88, 0.25), 0 0 20px rgba(15, 157, 88, 0.3);
+  animation: pulse var(--sai-dur-2) var(--sai-ease) infinite;
+}
+
+.target:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(122, 162, 247, 0.5), 0 0 0 20px rgba(15, 157, 88, 0.25);
+}
+
+.target:active {
+  transform: scale(0.96);
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+}
+
+.target.wrong {
+  animation: shake var(--sai-dur-2) var(--sai-ease);
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  75% { transform: translateX(8px); }
+}
+
+.round-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.25rem;
+  height: 2.25rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #1a1b26;
+  background: var(--sai-brand);
+  border-radius: 9999px;
+  margin-bottom: 1rem;
+}
+
+.time-display {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--sai-brand);
+  margin: 1rem 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.time-label {
+  font-size: 0.875rem;
+  color: #a9b1d6;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.status {
+  font-size: 1rem;
+  color: #a9b1d6;
+  min-height: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.status.wait {
+  color: #a9b1d6;
+}
+
+.status.go {
+  color: var(--sai-target-go);
+  font-weight: 600;
+}
+
+.status.too-early {
+  color: var(--sai-target-red);
+  font-weight: 600;
+}
+
+.avg-card {
+  background: var(--sai-bg);
+  border: 1px solid var(--sai-line);
+  border-radius: var(--sai-radius-m);
+  padding: 1.5rem;
+  margin-top: 1rem;
+}
+
+.avg-title {
+  font-size: 0.875rem;
+  color: #a9b1d6;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 0.75rem;
+}
+
+.avg-value {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--sai-brand);
+  margin: 0 0 0.5rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.rounds-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.round-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: var(--sai-ink);
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--sai-line);
+}
+
+.round-item:last-child {
+  border-bottom: none;
+}
+
+.round-label {
+  color: #a9b1d6;
+}
+
+.round-value {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 480px) {
+  main {
+    padding: 1rem;
+  }
+  .card {
+    padding: 1.5rem;
+  }
+  .target {
+    width: 220px;
+    height: 220px;
+    font-size: 1rem;
+  }
+  .time-display {
+    font-size: 2.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .target, .btn, .screen {
+    transition: none;
+    animation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+</style>
+</head>
+<body>
+<a href="#game" class="skip-link">Skip to game</a>
+<main>
+<section class="card" id="game">
+<div class="screen" id="screen-start" aria-hidden="false">
+<h1>Reaction Time</h1>
+<p class="subtitle">Wait for the box to turn green, then tap it as fast as you can. Five rounds, average at the end.</p>
+<div class="round-badge">Ready</div>
+<button id="btn-start" class="btn" type="button" aria-label="Start game">Start Game</button>
+</div>
+
+<div class="screen" id="screen-game" aria-hidden="true">
+<div class="round-badge" id="badge-round">Round <span id="num-round">1</span> / 5</div>
+<div class="status wait" id="status">Wait for green...</div>
+<div class="target" id="target" role="button" tabindex="0" aria-label="Target box. Press when it turns green." aria-pressed="false">Wait</div>
+<div class="time-label">Last reaction</div>
+<div class="time-display" id="time-last">--</div>
+<div class="time-label">ms</div>
+</div>
+
+<div class="screen" id="screen-results" aria-hidden="true">
+<h1>Results</h1>
+<div class="avg-card">
+<p class="avg-title">Average reaction time</p>
+<div class="avg-value" id="time-avg">--</div>
+<div class="time-label">ms over 5 rounds</div>
+</div>
+<div class="rounds-list" id="list-rounds"></div>
+<button id="btn-restart" class="btn" type="button" aria-label="Play again">Play Again</button>
+</div>
+</section>
+</main>
+
+<script>
+const roundTotal = 5;
+const delayMin = 1000;
+const delayMax = 3000;
+
+let currentRound = 0;
+let roundTimes = [];
+let isWaiting = false;
+let isGo = false;
+let startTime = 0;
+let timerId = null;
+
+const screenStart = document.getElementById("screen-start");
+const screenGame = document.getElementById("screen-game");
+const screenResults = document.getElementById("screen-results");
+const badgeRound = document.getElementById("badge-round");
+const numRound = document.getElementById("num-round");
+const status = document.getElementById("status");
+const target = document.getElementById("target");
+const timeLast = document.getElementById("time-last");
+const timeAvg = document.getElementById("time-avg");
+const listRounds = document.getElementById("list-rounds");
+const btnStart = document.getElementById("btn-start");
+const btnRestart = document.getElementById("btn-restart");
+
+function showScreen(id) {
+  [screenStart, screenGame, screenResults].forEach((screen) => {
+    screen.classList.remove("active");
+    screen.setAttribute("aria-hidden", "true");
+  });
+  const next = document.getElementById(id);
+  next.classList.add("active");
+  next.setAttribute("aria-hidden", "false");
+}
+
+function formatMs(ms) {
+  return Math.round(ms);
+}
+
+function setTargetWait() {
+  isGo = false;
+  target.classList.remove("go");
+  target.classList.add("wait");
+  target.setAttribute("aria-pressed", "false");
+  target.textContent = "Wait";
+  status.textContent = "Wait for green...";
+  status.className = "status wait";
+}
+
+function setTargetGo() {
+  isGo = true;
+  isWaiting = false;
+  target.classList.remove("wait");
+  target.classList.add("go");
+  target.setAttribute("aria-pressed", "true");
+  target.textContent = "GO";
+  startTime = performance.now();
+  status.textContent = "Click now!";
+  status.className = "status go";
+}
+
+function handleTargetAction() {
+  if (!isGo) {
+    target.classList.add("wrong");
+    status.textContent = "Too early! Wait for green.";
+    status.className = "status too-early";
+    setTimeout(() => {
+      target.classList.remove("wrong");
+      setTargetWait();
+    }, 800);
+    return;
+  }
+  clearTimeout(timerId);
+  const reaction = performance.now() - startTime;
+  roundTimes.push(reaction);
+  currentRound++;
+  numRound.textContent = currentRound;
+  timeLast.textContent = formatMs(reaction);
+  if (currentRound >= roundTotal) {
+    showResults();
+    return;
+  }
+  setTargetWait();
+  setTimeout(startNextRound, 1500);
+}
+
+function startNextRound() {
+  badgeRound.textContent = `Round ${currentRound + 1} / 5`;
+  const delay = delayMin + Math.random() * (delayMax - delayMin);
+  isWaiting = true;
+  timerId = setTimeout(setTargetGo, delay);
+}
+
+function startGame() {
+  currentRound = 0;
+  roundTimes = [];
+  badgeRound.textContent = `Round 1 / 5`;
+  timeLast.textContent = "--";
+  showScreen("screen-game");
+  setTargetWait();
+  setTimeout(startNextRound, 800);
+}
+
+function showResults() {
+  const sum = roundTimes.reduce((acc, val) => acc + val, 0);
+  const avg = sum / roundTimes.length;
+  timeAvg.textContent = formatMs(avg);
+  listRounds.innerHTML = "";
+  roundTimes.forEach((val, index) => {
+    const item = document.createElement("div");
+    item.className = "round-item";
+    item.innerHTML = `<span class="round-label">Round ${index + 1}</span><span class="round-value">${formatMs(val)} ms</span>`;
+    listRounds.appendChild(item);
+  });
+  showScreen("screen-results");
+}
+
+function restartGame() {
+  currentRound = 0;
+  roundTimes = [];
+  showScreen("screen-start");
+}
+
+btnStart.addEventListener("click", startGame);
+btnRestart.addEventListener("click", restartGame);
+target.addEventListener("click", handleTargetAction);
+target.addEventListener("keydown", (event) => {
+  if (event.key === "Enter" || event.key === " ") {
+    event.preventDefault();
+    handleTargetAction();
+  }
+});
+</script>
+</body>
+</html>

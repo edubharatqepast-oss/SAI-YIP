@@ -1,0 +1,15 @@
+name = "sai-yip-api"
+main = "worker.js"
+compatibility_date = "2025-03-01"
+
+[ai]
+binding = "AI"
+
+# No KV: Sheets + project Drive are the database.
+# Weekly batch: Monday 03:00 UTC, 5 skills x 100 = 500 into Review_Queue.
+# Optional Friday refill (weakest skill): uncomment second cron when ready.
+[triggers]
+crons = ["0 3 * * 1"]
+
+[vars]
+SHEET_ID = "1fOFEiNzkmn1SJhsfeDBW9ahLMb_tlCnZpg2skcNXl-s"

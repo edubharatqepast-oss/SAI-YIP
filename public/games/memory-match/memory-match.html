@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Memory Match — SAI.YIP</title>
+<style>
+:root {
+  --sai-bg: #fffdf5;
+  --sai-ink: #0f172a;
+  --sai-brand: #1d4ed8;
+  --sai-brand-2: #7c3aed;
+  --sai-surface: #ffffff;
+  --sai-line: #e2e8f0;
+  --sai-radius-m: 16px;
+  --sai-shadow-m: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --sai-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --sai-dur-2: 200ms;
+  --card-size: 70px;
+}
+
+.dark {
+  --sai-bg: #0f172a;
+  --sai-ink: #f8fafc;
+  --sai-surface: #1e293b;
+  --sai-line: #334155;
+  --sai-shadow-m: 0 4px 6px -1px rgb(0 0 0 / 0.5);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  background: var(--sai-bg);
+  color: var(--sai-ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  min-height: 100vh;
+  transition: background var(--sai-dur-2) var(--sai-ease), color var(--sai-dur-2) var(--sai-ease);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+.game-container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.stats {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--sai-surface);
+  border: 1px solid var(--sai-line);
+  border-radius: var(--sai-radius-m);
+  box-shadow: var(--sai-shadow-m);
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.stat-value {
+  font-size: 1.125rem;
+  color: var(--sai-brand);
+  margin-left: 0.25rem;
+}
+
+.controls {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--sai-line);
+  background: var(--sai-surface);
+  color: var(--sai-ink);
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform var(--sai-dur-2) var(--sai-ease), box-shadow var(--sai-dur-2) var(--sai-ease), border-color var(--sai-dur-2) var(--sai-ease);
+}
+
+.btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--sai-brand);
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: var(--sai-shadow-m);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-primary {
+  background: var(--sai-brand);
+  border-color: var(--sai-brand);
+  color: #ffffff;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #1d4ed8;
+  box-shadow: 0 0 0 2px rgba(29, 78, 216, 0.3);
+}
+
+.grid {
+  display: grid;
+  gap: 1rem;
+  justify-items: center;
+  padding: 1rem;
+  background: var(--sai-surface);
+  border: 1px solid var(--sai-line);
+  border-radius: var(--sai-radius-m);
+  box-shadow: var(--sai-shadow-m);
+}
+
+.grid-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.grid-6 {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+@media (max-width: 640px) {
+  .grid-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .grid-6 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .card {
+    width: 80px;
+    height: 120px;
+  }
+}
+
+.card {
+  width: var(--card-size);
+  height: calc(var(--card-size) * 1.5);
+  perspective: 1000px;
+  cursor: pointer;
+  position: relative;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform var(--sai-dur-2) var(--sai-ease);
+  transform-style: preserve-3d;
+  border-radius: 12px;
+}
+
+.card.flipped .card-inner,
+.card.matched .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card:focus-visible .card-inner {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--sai-brand);
+  border-radius: 12px;
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  border: 1px solid var(--sai-line);
+}
+
+.card-front {
+  background: var(--sai-surface);
+  color: var(--sai-ink);
+}
+
+.card-back {
+  background: linear-gradient(135deg, var(--sai-brand), var(--sai-brand-2));
+  color: #ffffff;
+  transform: rotateY(180deg);
+}
+
+.card.matched .card-front {
+  background: #ecfdf5;
+  border-color: #10b981;
+}
+
+.dark .card.matched .card-front {
+  background: #064e3b;
+  border-color: #10b981;
+}
+
+.win-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgb(0 0 0 / 0.45);
+  backdrop-filter: blur(8px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  padding: 1rem;
+}
+
+.win-overlay.open {
+  display: flex;
+  animation: fadeIn var(--sai-dur-2) var(--sai-ease);
+}
+
+.win-card {
+  background: var(--sai-surface);
+  border: 1px solid var(--sai-line);
+  border-radius: var(--sai-radius-m);
+  padding: 2rem;
+  max-width: 320px;
+  width: 100%;
+  text-align: center;
+  box-shadow: var(--sai-shadow-m);
+}
+
+.win-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--sai-brand);
+  margin-bottom: 0.5rem;
+}
+
+.win-message {
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  color: var(--sai-ink);
+  opacity: 0.9;
+}
+
+.win-stats {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+</style>
+</head>
+<body>
+<div class="game-container">
+  <header class="header">
+    <h1 class="title">🃏 Memory Match</h1>
+    <div class="stats">
+      <div class="stat">Moves <span id="moves" class="stat-value">0</span></div>
+      <div class="stat">Matches <span id="matches" class="stat-value">0</span></div>
+      <div class="stat">Time <span id="timer" class="stat-value">0:00</span></div>
+    </div>
+  </header>
+
+  <div class="controls">
+    <button class="btn btn-primary" id="restartBtn">Restart</button>
+    <button class="btn" id="gridBtn">4×4</button>
+    <button class="btn" id="themeBtn">Dark Mode</button>
+  </div>
+
+  <div class="grid grid-4" id="grid" role="grid" aria-label="Memory match card grid">
+  </div>
+</div>
+
+<div class="win-overlay" id="winOverlay" aria-modal="true" role="dialog" aria-labelledby="winTitle" tabindex="-1">
+  <div class="win-card">
+    <h2 id="winTitle" class="win-title">You won! 🎉</h2>
+    <p class="win-message" id="winMessage">All pairs found.</p>
+    <div class="win-stats" id="winStats"></div>
+    <button class="btn btn-primary" id="playAgainBtn">Play Again</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  const EMOJIS = ['🍎', '🍌', '🍇', '🍓', '🍉', '🍒', '🍍', '🥝', '🥥', '🥑', '🍋', '🍑'];
+  const GRID_SIZES = [
+    { cols: 4, rows: 4, pairs: 8, label: '4×4' },
+    { cols: 6, rows: 4, pairs: 12, label: '6×4' }
+  ];
+
+  let state = {
+    gridIndex: 0,
+    firstCard: null,
+    secondCard: null,
+    lockBoard: false,
+    moves: 0,
+    matches: 0,
+    matchedPairs: 0,
+    totalPairs: 0,
+    timerSeconds: 0,
+    timerInterval: null,
+    started: false
+  };
+
+  const els = {
+    grid: document.getElementById('grid'),
+    moves: document.getElementById('moves'),
+    matches: document.getElementById('matches'),
+    timer: document.getElementById('timer'),
+    restartBtn: document.getElementById('restartBtn'),
+    gridBtn: document.getElementById('gridBtn'),
+    themeBtn: document.getElementById('themeBtn'),
+    winOverlay: document.getElementById('winOverlay'),
+    winMessage: document.getElementById('winMessage'),
+    winStats: document.getElementById('winStats'),
+    playAgainBtn: document.getElementById('playAgainBtn')
+  };
+
+  function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
+    return array;
+  }
+
+  function startTimer() {
+    if (state.timerInterval) return;
+    state.started = true;
+    state.timerInterval = setInterval(function () {
+      state.timerSeconds++;
+      updateTimer();
+    }, 1000);
+  }
+
+  function stopTimer() {
+    clearInterval(state.timerInterval);
+    state.timerInterval = null;
+  }
+
+  function resetTimer() {
+    stopTimer();
+    state.timerSeconds = 0;
+    state.started = false;
+    updateTimer();
+  }
+
+  function updateTimer() {
+    const minutes = Math.floor(state.timerSeconds / 60);
+    const seconds = state.timerSeconds % 60;
+    els.timer.textContent = minutes + ':' + String(seconds).padStart(2, '0');
+  }
+
+  function formatStats() {
+    return 'Moves: ' + state.moves + '  |  Time: ' + els.timer.textContent;
+  }
+
+  function createCard(id, emoji) {
+    const card = document.createElement('button');
+    card.type = 'button';
+    card.className = 'card';
+    card.dataset.id = id;
+    card.dataset.emoji = emoji;
+    card.setAttribute('aria-label', 'Card ' + (id + 1));
+    card.setAttribute('aria-roledescription', 'card');
+    card.innerHTML = '<div class="card-inner"><div class="card-front"><span class="sr-only">Face down</span></div><div class="card-back" aria-hidden="true">' + emoji + '</div></div>';
+    card.addEventListener('click', handleCardClick);
+    card.addEventListener('keydown', handleCardKeydown);
+    return card;
+  }
+
+  function handleCardKeydown(event) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      handleCardClick.call(this, event);
+    }
+  }
+
+  function handleCardClick() {
+    if (state.lockBoard) return;
+    if (this === state.firstCard) return;
+    if (this.classList.contains('matched') || this.classList.contains('flipped')) return;
+
+    if (!state.started) startTimer();
+
+    this.classList.add('flipped');
+
+    if (!state.firstCard) {
+      state.firstCard = this;
+      return;
+    }
+
+    state.secondCard = this;
+    state.moves++;
+    els.moves.textContent = state.moves;
+    checkMatch();
+  }
+
+  function checkMatch() {
+    const isMatch = state.firstCard.dataset.emoji === state.secondCard.dataset.emoji;
+    state.lockBoard = true;
+
+    if (isMatch) {
+      disableCards();
+    } else {
+      unflipCards();
+    }
+  }
+
+  function disableCards() {
+    state.firstCard.classList.add('matched');
+    state.secondCard.classList.add('matched');
+    state.matches++;
+    state.matchedPairs++;
+    els.matches.textContent = state.matches;
+    resetBoard();
+    if (state.matchedPairs >= state.totalPairs) endGame();
+  }
+
+  function unflipCards() {
+    setTimeout(function () {
+      state.firstCard.classList.remove('flipped');
+      state.secondCard.classList.remove('flipped');
+      resetBoard();
+    }, 1000);
+  }
+
+  function resetBoard() {
+    state.firstCard = null;
+    state.secondCard = null;
+    state.lockBoard = false;
+  }
+
+  function buildGrid() {
+    els.grid.innerHTML = '';
+    const config = GRID_SIZES[state.gridIndex];
+    els.grid.className = 'grid grid-' + config.cols;
+    state.totalPairs = config.pairs;
+    const selected = EMOJIS.slice(0, config.pairs);
+    const cards = shuffle([].concat(selected, selected));
+    cards.forEach(function (emoji, index) {
+      const card = createCard(index, emoji);
+      els.grid.appendChild(card);
+    });
+    resetTimer();
+    state.moves = 0;
+    state.matches = 0;
+    state.matchedPairs = 0;
+    els.moves.textContent = '0';
+    els.matches.textContent = '0';
+    els.winOverlay.classList.remove('open');
+  }
+
+  function endGame() {
+    stopTimer();
+    els.winMessage.textContent = 'All pairs found.';
+    els.winStats.textContent = formatStats();
+    els.winOverlay.classList.add('open');
+    els.winOverlay.focus();
+  }
+
+  function toggleTheme() {
+    document.documentElement.classList.toggle('dark');
+    const isDark = document.documentElement.classList.contains('dark');
+    els.themeBtn.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+    localStorage.setItem('sai-theme', isDark ? 'dark' : 'light');
+  }
+
+  function init() {
+    const saved = localStorage.getItem('sai-theme');
+    if (saved === 'dark') {
+      document.documentElement.classList.add('dark');
+      els.themeBtn.textContent = 'Light Mode';
+    } else {
+      els.themeBtn.textContent = 'Dark Mode';
+    }
+
+    buildGrid();
+
+    els.restartBtn.addEventListener('click', buildGrid);
+    els.gridBtn.addEventListener('click', function () {
+      state.gridIndex = (state.gridIndex + 1) % GRID_SIZES.length;
+      els.gridBtn.textContent = GRID_SIZES[state.gridIndex].label;
+      buildGrid();
+    });
+    els.themeBtn.addEventListener('click', toggleTheme);
+    els.playAgainBtn.addEventListener('click', buildGrid);
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>

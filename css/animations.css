@@ -1,0 +1,69 @@
+@keyframes rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pop {
+  0% { opacity: 0; transform: scale(.96); }
+  60% { opacity: 1; transform: scale(1.015); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-5px); }
+  40% { transform: translateX(5px); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(3px); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(-1.5deg); }
+  50% { transform: translateY(-4px) rotate(1.5deg); }
+}
+@keyframes drift {
+  0%, 100% { transform: translate(0,0) scale(1); }
+  50% { transform: translate(10px,12px) scale(1.06); }
+}
+@keyframes shine {
+  from { background-position: 130% 0; }
+  to { background-position: -60% 0; }
+}
+@keyframes shimmer {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(100%); }
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes splashPop {
+  0% { opacity: 0; transform: scale(.8) translateY(12px); }
+  60% { opacity: 1; transform: scale(1.04) translateY(0); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes splashBar {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(250%); }
+}
+@keyframes splashOut {
+  to { opacity: 0; transform: scale(1.04); visibility: hidden; }
+}
+@keyframes glowPulse {
+  0%, 100% { box-shadow: var(--sai-shadow-m); }
+  50% { box-shadow: var(--sai-shadow-l); }
+}
+@keyframes waddle {
+  0%, 100% { transform: rotate(-7deg); }
+  50% { transform: rotate(7deg); }
+}
+@keyframes scanline {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(120px); opacity: .6; }
+}
+@keyframes dm-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+}
+@keyframes dm-bounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-8px) scale(1.05); }
+}
+.celebrate { animation: pop var(--sai-dur-2) var(--sai-ease); }
+.attention { animation: glowPulse 2.2s ease-in-out infinite; }

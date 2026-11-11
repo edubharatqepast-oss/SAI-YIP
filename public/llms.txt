@@ -1,0 +1,16 @@
+# SAI.YIP
+
+> Smart Adaptive Intelligence for YIP Kerala. Free bilingual (English + Malayalam) learning PWA for Class 6-10: 15 challenges across Reasoning, Observation, Logic, Coding and Problem Solving, with adaptive difficulty and a teacher portal.
+
+- [Home](https://sai-yip.pages.dev/)
+- [Lessons](https://sai-yip.pages.dev/) (Lessons tab — Duolingo-style roadmap, challenge last)
+- [Progress](https://sai-yip.pages.dev/) (Progress tab — SVG donut + skill bars)
+- [Coding Lab](https://sai-yip.pages.dev/) (Coding Lab tab — JS on-device, Python via free runners)
+- [Teacher portal](https://sai-yip.pages.dev/) (Teacher tab — scan a student QR for instant reports)
+- [Health API](https://sai-yip-api.workers.dev/api/health)
+
+## Rules
+
+- Rs.0 stack: [Cloudflare Pages](https://pages.cloudflare.com/) + Google Sheets + project Drive.
+- Login is QR scan (KVAD-001 format) or demo; teachers use TCH-001 school codes.
+- Student data belongs to the school sheet; demo mode never touches it.

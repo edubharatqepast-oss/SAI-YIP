@@ -1,0 +1,24 @@
+{
+  "name": "SAI weekly question template",
+  "rules": "Short simple English for Class 6-10. Correct natural Malayalam. One clear answer. Hints guide, never give away. Explanations in 1 line.",
+  "batches": {
+    "perCall": 100,
+    "callsPerWeek": 5,
+    "weeklyTarget": 500,
+    "plan": "Call 1-2: Reasoning + Observation L1-L2. Call 3-4: Logic + Coding L1-L2. Call 5: Problem Solving L1-L3. Call 6 (spare): refill weakest skill."
+  },
+  "sample": {
+    "id": "R99",
+    "skill": "Reasoning",
+    "level": 1,
+    "type": "mcq",
+    "prompt_en": "Odd one out: Apple, Banana, Carrot, Mango. Which is different?",
+    "prompt_ml": "വ്യത്യസ്തമായത് കണ്ടെത്തൂ: ആപ്പിൾ, വാഴപ്പഴം, കാരറ്റ്, മാമ്പഴം.",
+    "options": ["Carrot", "Apple", "Banana", "Mango"],
+    "answer": "Carrot",
+    "hint_en": "Think about food groups.",
+    "hint_ml": "ഭക്ഷണ വിഭാഗങ്ങളെക്കുറിച്ച് ചിന്തിക്കൂ.",
+    "explanation_en": "Carrot is a vegetable. Others are fruits.",
+    "explanation_ml": "കാരറ്റ് പച്ചക്കറിയാണ്. മറ്റുള്ളവ പഴങ്ങളാണ്."
+  }
+}
