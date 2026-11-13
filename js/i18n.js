@@ -63,22 +63,39 @@ const dict = {
     locked: "Locked",
     game_cannot_play: "This game cannot be played here.",
     game_blocks_embedding: "This game is hosted on another site that blocks embedding.",
-    license: "License:"
+    license: "License:",
+    vlearn: "VLearn",
+    vlearn_desc: "Open-source & Creative Commons videos for curious minds. Logic, math, coding, and more.",
+    videos: "videos",
+    no_videos_category: "No videos in this category.",
+    show_all_videos: "Show all videos",
+    source_google_sheets: "Source: Google Sheets",
+    source_fallback: "Source: fallback (check console)",
+    video_cannot_play: "This video cannot be played here.",
+    video_blocks_embedding: "This video is hosted on another site that blocks embedding.",
+    age: "Age:",
+    watch: "Watch",
+    cat_logic_puzzles: "Logic Puzzles",
+    cat_math: "Math",
+    cat_geometry: "Geometry",
+    cat_coding: "Coding",
+    cat_classification: "Classification",
+    cat_animation: "Animation",
   },
   ml: {
-    login_title: "SAI ലോഗിൻ",
+    login_title: "സ്വാഗതം",
     login_sub: "കെവി അടൂർ • ക്ലാസ് 6-10 • ഓൺലൈൻ • Rs.0",
-    kvad_label: "ഘട്ടം 1 — നിങ്ങളുടെ KVAD ID (ഉദാ KVAD-001)",
+    kvad_label: "ഘട്ടം 1 — നിങ്ങളുടെ KVAD ID",
     google_btn: "ഘട്ടം 2 — Google ഉപയോഗിച്ച് തുടരൂ",
     google_wait: "Google-നായി കാത്തിരിക്കുന്നു…",
     sheet_wait: "ഷീറ്റിൽ ചേർക്കുന്നു…",
     sheet_done: "ഷീറ്റ് റെഡി ✅",
-    sheet_fail: "ഷീറ്റ് ഒഴിവാക്കി — സേവ് ചെയ്യുമ്പോൾ വീണ്ടും ശ്രമിക്കും",
+    sheet_fail: "ഷീറ്റ് പരിശോധിക്കുമ്പോൾ പ്രശ്നം",
     offline_btn: "Google ഇല്ലേ? ഡെമോ ആയി തുടരൂ",
     offline_note: "ഡെമോ ഈ ഫോണിൽ മാത്രം സേവ് ചെയ്യും. ഷീറ്റിലേക്ക് സിങ്ക് ചെയ്യാൻ പിന്നീട് Google ഉപയോഗിച്ച് ലോഗിൻ ചെയ്യൂ.",
     save_exit: "സേവ് & എക്സിറ്റ്",
-    logout: "ലോഗ oublié",
-    challenges: "15 വെല്ലuviazyliheiten",
+    logout: "ലോഗൗട്ട്",
+    challenges: "15 വെല്ലുവിളികൾ",
     progress: "പുരോഗതി",
     coding: "കോഡിംഗ് ലാബ്",
     teacher: "ടീച്ചർ",
@@ -87,8 +104,8 @@ const dict = {
     retry: "വീണ്ടും ശ്രമിക്കൂ",
     show_hint: "സൂചന കാണൂ",
     login: "ലോഗിൻ",
-    loading: "RAM-ൽ നിന്ന് ലോഡ് ചെയ്യുന്നു…",
-    empty: "വെല്ലuviazyliheiten",
+    loading: "ലോഡ് ചെയ്യുന്നു…",
+    empty: "വെല്ലുവിളികളില്ല.",
     login_error: "KVAD-001 പോലെ സാധുവായ ID നൽകൂ",
     google_error: "Google തടഞ്ഞു അല്ലെങ്കിൽ റദ്ദാക്കി. വീണ്ടും ശ്രമിക്കൂ അല്ലെങ്കിൽ ഡെമോ ഉപയോഗിക്കൂ.",
     points: "പോയിന്റ്",
@@ -97,32 +114,32 @@ const dict = {
     solved: "പൂർത്തിയായി",
     larger_text: "വലിയ അക്ഷരം",
     how_it_works: "SAI എങ്ങനെ മാറുന്നു: <40% എളുപ്പമാകും + മലയാളം സൂചന, >80% ലെവൽ കൂടും.",
-    feature_adaptive: "പരിണാമ വെല്ലുവിളികൾ",
-    feature_adaptive_body: "15 ഇര emerges വെല്ലുവിളികൾ. നിങ്ങളുടെ ലെവലിന് അനുസരിച്ച് മാറുന്നു.",
-    feature_bilingual: "ഇരと語",
+    feature_adaptive: "അഡാപ്റ്റീവ് വെല്ലുവിളികൾ",
+    feature_adaptive_body: "15 ഇരുന്നു വെല്ലുവിളികൾ. നിങ്ങളുടെ ലെവലിന് അനുസരിച്ച് മാറുന്നു.",
+    feature_bilingual: "ഇര陸語",
     feature_bilingual_body: "ഇംഗ്ലീഷും മലയാളവും. മാറിക്കൊണ്ട് ഉപയോഗിക്കാം.",
     feature_coding: "കോഡിംഗ് ലാബ്",
-    feature_coding_body: "ബ്രௌസറിൽ കോഡ് എഴുതി വിന്യസിക്കുക. പ്രോഗ്രാമിംഗ് ലോജിക് ഘട്ടം ഘട്ടമായി പഠിക്കുക.",
+    feature_coding_body: "ബ്രൗസറിൽ കോഡ് എഴുതി പ്രവർത്തിപ്പിക്കുക. പ്രോഗ്രാമിംഗ് ലോജിക് ഘട്ടം ഘട്ടമായി പഠിക്കുക.",
     feature_games: "ഐക്യു ഗെയിമുകൾ",
     feature_games_body: "10 ബ്രെയിൻ-ട്രെയിനിംഗ് ഗെയിമുകൾ: ലോജിക്, സ്ട്രാറ്റജി, നമ്പേഴ്സ്, വേർഡ്‌സ്, ഫിസിക്സ് എന്നിവ.",
     feature_progress: "പുരോഗതി ട്രാക്കിംഗ്",
     feature_progress_body: "സ്കിൽ ഗ്രാഫുകൾ, പോയിന്റുകൾ, ബേഡ്ജുകൾ, സ്ട്രെ കുകൾ. ദിവസേന വളരാം.",
     feature_accessible: "അക്സസെബിൾ",
-    feature_accessible_body: "സ്ക്രീൻ റെഡർ പിന്തുണ, ഉയർന്ന കോൺട്രാസ്റ്റ്, വലiper അക്ഷരം, സ്കിപ്പ് ലിങ്ക്, കീബോർഡ് നാവിഗേഷൻ.",
+    feature_accessible_body: "സ്ക്രീൻ റീഡർ പിന്തുണ, ഉയർന്ന കോൺട്രാസ്റ്റ്, വലിയ അക്ഷരം, സ്കിപ്പ് ലിങ്ക്, കീബോർഡ് നാവിഗേഷൻ.",
     hero_sub: "സ്മാർട്ട് അഡാപ്റ്റീവ് ലേണിംഗ്",
     answer_second: "ഉത്തരം രണ്ടാമത്",
-    hero_text: "ക്ലാസ് 6-10 ലേക്ക് അഡാപ്റ്റീവ് ബ്രെയിൻ-ട്രെയിനിംഗ് ഗെയിമുകൾ. ഇരène ഭാഷ, مفت Malt, ക്യുറായ്ട്ഡ് മൈൻഡുകൾക്ക്.",
+    hero_text: "ക്ലാസ് 6-10 ലേക്ക് അഡാപ്റ്റീവ് ബ്രെയിൻ-ട്രെയിനിംഗ് ഗെയിമുകൾ. ഇരുറ ಭಾಷ,msız, ക്യുറായ്ട്ഡ് മൈൻഡുകൾക്ക്.",
     start_learning: "അध्ययन ആരംഭിക്കുക",
-    play_iq_games: "ഐക്യു ഗെയിംസ് കളിക്കുക",
+    play_iq_games: "ഐക്യു ഗെയിമുകൾ കളിക്കുക",
     what_you_get: "നിങ്ങൾക്ക് ലഭിക്കുന്നത്",
-    everything_you_get: "പഠിക്കാനും കളിക്കാനും വളരാനും എല്ലாம் ഒരു ഇടത്തിൽ.",
+    everything_you_get: "പഠിക്കാനും കളിക്കാനും വളരാനും എല്ലാം ഒരു ഇടത്തിൽ.",
     iq_games: "ഐക്യു ഗെയിമുകൾ",
     brain_training_desc: "ലോജിക്, മെമ്മറി, സർഗ്ഗാത്മകത മെച്ചപ്പെടുത്താനുള്ള ബ്രെയിൻ-ട്രെയിനിംഗ് ഗെയിമുകൾ.",
     quota_exhausted: "ഇന്ന് കോട്ട പൂർത്തിയായി",
     left: "ബാക്കി",
     no_games_category: "ഈ വിഭാഗത്തിൽ ഗെയിമുകൾ ഇല്ല.",
     play_game: "ഗെയിം കളിക്കുക",
-    plays_inside: "SAI.YIP Jared അവലോകനത്തിൽ കളിക്കാം",
+    plays_inside: "SAI.YIPudella കളിക്കാം",
     not_available_offline: "ഓഫ്‌ലൈനിൽ ലഭ്യമല്ല",
     quota_used_up: "കോട്ട പൂർത്തിയായി",
     play: "കളിക്കുക",
@@ -130,9 +147,11 @@ const dict = {
     game_cannot_play: "ഈ ഗെയിം ഇവിടെ കളിക്കാൻ കഴിയില്ല.",
     game_blocks_embedding: "ഈ ഗെയിം മറ്റ് സൈറ്റിൽ ഹോസ്റ്റ് ചെയ്തിരിക്കുന്നു, അത് എംബെഡിംഗ് തടയുന്നു.",
     license: "ലൈസൻസ്:",
-    vlearn: "വെallarning",
-    vlearn_desc: "തത്ത്വചിന്ത, ഗണിതം, കോഡിംഗ് എന്നിവയ്ക്കായ رسی offenen സ്രോതസ്സ് വീഡിയോകൾ.",
+    vlearn: "വിയൻ‍റ്",
+    vlearn_desc: "തത്ത്വചിന്ത, ഗണിതം, കോഡിംഗ് എന്നിവയ്ക്കായ rí）、opensource വീഡിയോകൾ.",
     videos: "വീഡിയോകൾ",
+    no_videos_category: "ഈ വിഭാഗത്തിൽ വീഡിയോകൾ ഇല്ല.",
+    show_all_videos: "എല്ലാ വീഡിയോകളും കാണൂ",
     source_google_sheets: "ഉറവിടം: ഗൂഗിൾ ഷീറ്റ്സ്",
     source_fallback: "ഉറവിടം: ഫോൾബാക്ക് (കോൺസോൽ പരിശോധിക്കുക)",
     video_cannot_play: "ഈ വീഡിയോ ഇവിടെ കളിക്കാൻ കഴിയില്ല.",
@@ -142,26 +161,13 @@ const dict = {
     cat_logic_puzzles: "ലോജിക് പസിലുകൾ",
     cat_math: "ഗണിതം",
     cat_geometry: "ജ്യാമിതി",
-    cat_coding: "കോഡിംഗ്",
+    cat_coding: "കോഡിംഗ് ലാബ്",
     cat_classification: "വർഗ്ഗീകരണം",
-    cat_animation: "ഐനിമേഷൻ"
+    cat_animation: "ഐനിമേഷൻ",
   }
 };
 
-const future = {
-  hi: { challenges: "15 चुनौतियाँ", progress: "प्रगति", submit: "जमा करें" },
-  ta: { challenges: "15 சவால்கள்", progress: "முன்னேற்றம்", submit: "சமர்ப்பி" }
-};
-
-export function t(key, lang) {
-  const l = dict[lang] ? lang : "en";
-  return dict[l][key] || dict.en[key] || key;
-}
-
-export function futureLangs() {
-  return future;
-}
-
-export function supportedLangs() {
-  return ["en", "ml"];
+export function t(key, lang = "en") {
+  const byLang = dict[lang] || dict.en;
+  return byLang[key] || dict.en[key] || key;
 }

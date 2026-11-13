@@ -41,10 +41,10 @@
 .cc-dots span { width: 8px; height: 8px; border-radius: 999px; background: #e2e8f0; }
 .cc-dots span.on { background: var(--sai-brand); }
 .grid-head { display: grid; gap: 6px; margin-bottom: 12px; }
-.grid-head h2 { margin: 0; font-size: 24px; letter-spacing: -.3px; }
+.grid-head h2 { font-size: 24px; letter-spacing: -.3px; }
 .grid-head .skillbar { max-width: 320px; }
 .badge {
-  display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; min-height: 30px;
+  display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; min-height: 44px;
   border-radius: 999px; font-size: 12px; font-weight: 800; letter-spacing: .2px;
   background: var(--sai-brand-soft); color: #1e3a8a; border: 1px solid #bfdbfe;
 }
@@ -52,7 +52,7 @@
 .badge.l2 { background: var(--sai-accent-soft); color: #78350f; border-color: #fcd34d; }
 .badge.l3 { background: #ffedd5; color: #9a3412; border-color: #fdba74; }
 .badge.skill { background: var(--sai-surface-2); color: var(--sai-ink); }
-#kvadBadge { background: var(--sai-grad-brand); color: #fff; border: 0; box-shadow: rgba(29,78,216,.28) 0 8px 24px -12px; width: 113.484375px; height: 35px; }
+#kvadBadge { background: var(--sai-grad-brand); color: #fff; border: 0; box-shadow: rgba(29,78,216,.28) 0 8px 24px -12px; width: auto; min-width: 50px; min-height: 44px; padding: 0 14px; display: inline-flex; align-items: center; justify-content: center; }
 .skillbar { height: 12px; background: #e2e8f0; border-radius: 999px; overflow: hidden; }
 .skillbar > div {
   height: 100%; width: 0%;
@@ -64,7 +64,7 @@
 .result-ok { background: linear-gradient(180deg, #f0fdf4 0%, #dcfce7 100%); border: 1.5px solid #4ade80; border-radius: 12px; padding: 12px 14px; animation: pop var(--sai-dur-2) var(--sai-ease); }
 .result-bad { background: linear-gradient(180deg, #fef2f2 0%, #fee2e2 100%); border: 1.5px solid #f87171; border-radius: 12px; padding: 12px 14px; animation: shake var(--sai-dur-2) var(--sai-ease); }
 .options { display: grid; gap: 10px; margin: 14px 0; }
-.option { text-align: left; background: #fff; color: var(--sai-ink); border: 1.5px solid var(--sai-line); box-shadow: var(--sai-shadow-s); }
+.option { text-align: left; background: #fff; color: var(--sai-ink); border: 1.5px solid var(--sai-line); box-shadow: var(--sai-shadow-s); min-height: var(--sai-touch); }
 .option:hover { border-color: transparent; background: linear-gradient(#fff, #fff) padding-box, var(--sai-silver) border-box; transform: translateY(-2px); box-shadow: var(--sai-shadow-m); }
 .option.selected { background: linear-gradient(#eff6ff, #fff) padding-box, var(--sai-gold) border-box; border: 2px solid transparent; box-shadow: var(--sai-gold-shadow); transform: translateY(-2px); }
 .option:active { transform: scale(.98); cursor: grabbing; }
@@ -90,12 +90,18 @@ pre.hint { white-space: pre-wrap; font-size: 13px; font-family: ui-monospace, mo
 .bar-pct { font-size: 12px; font-weight: 800; color: var(--sai-ink-2); }
 .bar-row .muted { margin: 4px 0 0; }
 .skeleton { position: relative; overflow: hidden; background: #eef2f7; border-radius: 10px; min-height: 18px; }
-.buddy { position: fixed; left: 0; bottom: 16px; z-index: 60; width: 48px; height: 48px; pointer-events: none; will-change: transform; }
+.skeleton::after { content: ""; position: absolute; inset: 0; background: var(--sai-grad-shine); animation: shimmer 1.4s linear infinite; }
+.buddy { position: fixed; left: 0; bottom: max(16px, env(safe-area-inset-bottom)); z-index: 40; width: 48px; height: 48px; pointer-events: none; will-change: transform; }
 .buddy img { width: 48px; height: 48px; display: block; filter: drop-shadow(0 6px 10px rgba(29,78,216,.35)); }
 .buddy.flip img { transform: scaleX(-1); }
 .buddy.waddling img { animation: waddle 320ms ease-in-out infinite; }
 .buddy.climbing img { transform: rotate(-14deg); }
 .buddy.flip.climbing img { transform: scaleX(-1) rotate(14deg); }
 .buddy.sleepy img { opacity: .75; }
-.buddy-bubble { position: absolute; bottom: 54px; left: -8px; min-width: 130px; max-width: 190px; background: #fff; border: 1.5px solid var(--sai-line); border-radius: 12px; padding: 8px 10px; font-size: 13px; font-weight: 700; box-shadow: var(--sai-shadow-m); pointer-events: none; }
-.skeleton::after { content: ""; position: absolute; inset: 0; background: var(--sai-grad-shine); animation: shimmer 1.4s linear infinite; }
+.buddy-bubble { position: absolute; bottom: 54px; left: 8px; min-width: 130px; max-width: calc(100vw - 40px); background: #fff; border: 1.5px solid var(--sai-line); border-radius: 12px; padding: 8px 10px; font-size: 13px; font-weight: 700; box-shadow: var(--sai-shadow-m); pointer-events: none; }
+
+@media (max-width: 420px) {
+  .donut { width: 110px; height: 110px; }
+  .donut-num { font-size: 18px; }
+  .badge { min-height: 44px; }
+}

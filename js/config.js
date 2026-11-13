@@ -19,6 +19,6 @@ export function env() {
     googleClientId: window.__SAI_ENV__?.GOOGLE_CLIENT_ID || "",
     sheetId: window.__SAI_ENV__?.SHEET_ID || "",
     d1Url: window.__SAI_ENV__?.D1_URL || "",
-    apiUrl: window.__SAI_ENV__?.API_URL || "https://sai-yip-bckd.edubharatqepast.workers.dev"
+    apiUrl: window.__SAI_ENV__?.API_URL || "https://sai-yip-api.abelabrahamdeny.workers.dev"
   };
 }

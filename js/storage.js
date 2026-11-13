@@ -1,15 +1,16 @@
 import { getState } from "./store.js";
 import { env } from "./config.js";
+import { getAuthToken } from "./auth.js";
 
 async function apiRequest(path, method = "GET", body = null) {
-  const token = localStorage.getItem("sai_token");
+  const token = getAuthToken();
   const headers = { "content-type": "application/json" };
   if (token) headers["Authorization"] = "Bearer " + token;
 
   const res = await fetch(`${env().apiUrl}${path}`, {
     method,
     headers,
-    body: body ? JSON.stringify(body) : undefined
+    body: body ? JSON.stringify(body) : undefined,
   });
 
   if (!res.ok) {
@@ -22,20 +23,17 @@ async function apiRequest(path, method = "GET", body = null) {
 
 export async function storageGet(kvadId) {
   try {
-    // Get challenges from local file (fast, no auth needed)
     const challengesRes = await fetch("./data/challenges.json");
     const challenges = challengesRes.ok ? await challengesRes.json() : [];
 
-    // Get user data from API
     let saved = null;
     try {
       const progress = await apiRequest("/api/v1/progress");
       if (progress.ok) {
         saved = {
           skills: progress.progress.skills,
-          answers: {}
+          answers: {},
         };
-        // Reconstruct answers from skills if needed
       }
     } catch {
       // API not available, use localStorage
@@ -45,7 +43,6 @@ export async function storageGet(kvadId) {
     return { challenges, saved, provider };
   } catch (e) {
     console.error("storageGet error:", e);
-    // Fallback to localStorage
     const raw = localStorage.getItem("sai_backup_" + (kvadId || "anon"));
     const saved = raw ? JSON.parse(raw) : null;
     const challenges = [];
@@ -54,13 +51,11 @@ export async function storageGet(kvadId) {
 }
 
 export async function storageSet(payload) {
-  try {
-    // Save answers via API
-    const answers = payload.answers || {};
-    const skills = payload.skills || {};
-    const points = payload.points || 0;
+  const answers = payload.answers || {};
+  const skills = payload.skills || {};
+  const points = payload.points || 0;
 
-    // Submit each answer
+  try {
     for (const [challengeId, answer] of Object.entries(answers)) {
       try {
         await apiRequest("/api/v1/progress/challenges", "POST", {
@@ -69,18 +64,16 @@ export async function storageSet(payload) {
           level: answer.level || 1,
           answerGiven: answer.answer || "",
           correct: answer.correct ? 1 : 0,
-          score: answer.score || 0
+          score: answer.score || 0,
         });
       } catch {
         // Individual answer failures are non-critical
       }
     }
 
-    // Also save locally as backup
     localStorage.setItem("sai_backup_" + (payload.kvadId || "anon"), JSON.stringify(payload));
   } catch (e) {
     console.error("storageSet error:", e);
-    // Fallback to localStorage only
     localStorage.setItem("sai_backup_" + (payload.kvadId || "anon"), JSON.stringify(payload));
   }
 }
