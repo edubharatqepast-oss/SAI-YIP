@@ -81,6 +81,11 @@ const dict = {
     cat_coding: "Coding",
     cat_classification: "Classification",
     cat_animation: "Animation",
+    filter_all: "All",
+    filter_logic: "Logic",
+    filter_observation: "Observation",
+    filter_problem_solving: "Problem Solving",
+    filter_reasoning: "Reasoning"
   },
   ml: {
     login_title: "സ്വാഗതം",
@@ -164,6 +169,11 @@ const dict = {
     cat_coding: "കോഡിംഗ് ലാബ്",
     cat_classification: "വർഗ്ഗീകരണം",
     cat_animation: "ഐനിമേഷൻ",
+    filter_all: "എല്ലാം",
+    filter_logic: "ലോജിക്",
+    filter_observation: "അवलോകനം",
+    filter_problem_solving: "പ്രശ്നപരിഹാരം",
+    filter_reasoning: "ലോജിക്"
   }
 };
 
