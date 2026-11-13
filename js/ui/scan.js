@@ -1,6 +1,6 @@
 import { getState, setState } from "../store.js";
 import { t } from "../i18n.js";
-import { validKvad, saveLocal, lockSession, enforceLock, switchSession, isLocked, loginDemo, markSheetReady } from "../auth.js";
+import { validKvad, saveLocal, lockSession, enforceLock, switchSession, isLocked, loginDemo, loginWithKvad, markSheetReady } from "../auth.js";
 import { requestGoogleToken, fetchGoogleProfile, ensureUserRow, canUseGoogle } from "../google.js";
 import { apiConfigured } from "../backend.js";
 import { parseLoginCode, hasCamera, loadJsQr, supportedFormats, openCamera, stopCamera, detectOnce, decodeFileJsQr } from "../scan.js";
@@ -12,19 +12,6 @@ export function renderScan(root) {
   root.innerHTML = "";
   const card = document.createElement("div");
   card.className = "card login-card gold lift";
-  if (isLocked()) {
-    const lock = document.createElement("div");
-    lock.className = "result-ok";
-    lock.textContent = (s.lang === "ml" ? "🔒 പഠിക്കുന്നത്: " : "🔒 Learning as ") + s.kvadId;
-    const cont = document.createElement("button");
-    cont.textContent = s.lang === "ml" ? "തുടരൂ →" : "Continue →";
-    cont.onclick = async () => {
-      await batchGet10();
-      window.dispatchEvent(new CustomEvent("sai:navigate", { detail: "lessons" }));
-    };
-    lock.append(cont);
-    card.append(lock);
-  }
   const title = document.createElement("h2");
   title.textContent = s.lang === "ml" ? "സ്കാൻ ചെയ്ത് ലോഗിൻ" : "Scan to login";
   const sub = document.createElement("p");
@@ -198,10 +185,26 @@ export function renderScan(root) {
       status.className = "muted";
       status.textContent = "";
       askSwitch(gate.next);
+      busy = false;
+      return;
+    }
+    status.className = "muted";
+    status.textContent = s.lang === "ml"
+      ? "ലോഗിൻ ചെയ്യുന്നു…"
+      : "Signing in…";
+    const authed = await loginWithKvad(parsed.kvadId);
+    if (authed.ok) {
+      await enterLessons(parsed.kvadId);
       return;
     }
     lockSession(parsed.kvadId);
+    localStorage.setItem("sai_token", "demo-local:" + parsed.kvadId);
+    status.className = "muted";
+    status.textContent = s.lang === "ml"
+      ? "സർവർ ലഭ്യമില്ല — ഡെമോ മോഡ്."
+      : "Server unavailable — demo mode.";
     await enterLessons(parsed.kvadId);
+    busy = false;
   }
   function stopLoop() {
     if (timer) clearInterval(timer);
@@ -279,6 +282,7 @@ export function renderScan(root) {
     if (busy) return;
     busy = true;
     loginDemo("KVAD-001");
+    localStorage.setItem("sai_token", "demo-local:KVAD-001");
     status.className = "muted";
     status.textContent = s.lang === "ml"
       ? "ഡെമോ: ഈ ഫോണിൽ മാത്രം സേവ് ചെയ്യും."
@@ -287,6 +291,7 @@ export function renderScan(root) {
     track("demo_login", {});
     await batchGet10();
     window.dispatchEvent(new CustomEvent("sai:navigate", { detail: "lessons" }));
+    busy = false;
   };
   input.oninput = () => {
     if (status.className === "error") {

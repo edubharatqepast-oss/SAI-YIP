@@ -30,6 +30,7 @@ body {
   border-bottom: 1px solid var(--sai-line);
   position: sticky; top: 1px; z-index: 60; left: 0; right: 0;
 }
+.topbar, #kvadBadge, #sizeBtn, #buddyBtn, #langBtn, #saveBtn { display: none !important; }
 .brand { display: flex; gap: 10px; align-items: center; font-weight: 900; }
 .brand img { width: 42px; height: 42px; filter: drop-shadow(0 6px 12px rgba(29,78,216,.3)); animation: float 4s ease-in-out infinite; }
 .brand-name { display: flex; align-items: center; font-size: 18px; letter-spacing: .3px; background: var(--sai-grad-brand); -webkit-background-clip: text; background-clip: text; color: transparent; }

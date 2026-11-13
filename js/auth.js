@@ -60,7 +60,7 @@ function baseSession(provider, extra) {
 export function loginDemo(kvadId) {
   const id = String(kvadId || "").trim().toUpperCase();
   if (!validKvad(id)) return { ok: false };
-  setState({ kvadId: id, session: baseSession("demo", { offline: true }), role: "student" });
+  setState({ kvadId: id, session: baseSession("demo", { offline: true, demoAuthenticated: true }), role: "student" });
   saveLocal();
   return { ok: true, mode: "demo" };
 }
@@ -142,7 +142,7 @@ export function lockSession(kvadId) {
   if (!validKvad(id)) return { ok: false };
   setState({
     kvadId: id,
-    session: baseSession("scan", { kvadId: id, locked: true }),
+    session: baseSession("scan", { kvadId: id, locked: true, demoAuthenticated: true }),
     role: "student"
   });
   saveLocal();
@@ -170,7 +170,7 @@ export function switchSession(kvadId, provider) {
     answers: {},
     points: 0,
     badges: [],
-    session: baseSession(provider || "scan", { kvadId: id, locked: true }),
+    session: baseSession(provider || "scan", { kvadId: id, locked: true, demoAuthenticated: true }),
     role: "student"
   });
   saveLocal();
@@ -218,7 +218,11 @@ export function logout() {
 }
 
 export function isAuthenticated() {
-  return Boolean(localStorage.getItem(TOKEN_KEY));
+  return Boolean(
+    localStorage.getItem(TOKEN_KEY) ||
+    getState().session?.demoAuthenticated ||
+    isLocked()
+  );
 }
 
 export function getAuthToken() {

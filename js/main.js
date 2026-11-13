@@ -1,6 +1,6 @@
 import { getState, setState } from "./store.js";
 import { t } from "./i18n.js";
-import { loadLocal, saveLocal, isAuthenticated, logout } from "./auth.js";
+import { loadLocal, saveLocal, isAuthenticated, isLocked, logout } from "./auth.js";
 import { batchUpdate4 } from "./sheets.js";
 import { initA11y, cycleFontSize, announce } from "./a11y.js";
 import { initBuddy, toggleBuddy } from "./buddy.js";
@@ -29,7 +29,7 @@ function isAuthed() {
 function paintNav() {
   const nav = document.querySelector("nav.nav");
   if (!nav) return;
-  if (!isAuthed()) {
+  if (!isAuthed() && !isLocked()) {
     nav.classList.add("nav-hidden");
     nav.classList.remove("nav-visible");
     return;
@@ -55,7 +55,7 @@ function render() {
   if (route === "login") route = "scan";
   resetQuotaIfNewDay();
 
-  if (PROTECTED_ROUTES.includes(route) && !isAuthed()) {
+  if (PROTECTED_ROUTES.includes(route) && !isAuthed() && !isLocked()) {
     route = "scan";
     renderScan(el);
     return;
@@ -106,7 +106,7 @@ function render() {
 
 function go(next) {
   if (!routes.includes(next)) return;
-  if (PROTECTED_ROUTES.includes(next) && !isAuthed()) {
+  if (PROTECTED_ROUTES.includes(next) && !isAuthed() && !isLocked()) {
     route = "scan";
     track("nav", { route, blocked: next });
     render();
